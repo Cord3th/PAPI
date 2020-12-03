@@ -8,6 +8,7 @@
 using namespace std;
 using namespace std::chrono;
 
+#define N 1000
 #define NUM_EVENT 7
 #define THRESHOLD 100000
 #define ERROR_RETURN(retval) { fprintf(stderr, "Error %d %s:line %d: \n", retval,__FILE__,__LINE__);  exit(retval); }
@@ -43,23 +44,22 @@ int main(int argc, char **argv) {
 	steady_clock::time_point start, finish;
 	start = steady_clock::now();
 
-	cout << "zhopa"<< endl;
-	int n = atoi(argv[1]);
+
 	double sum = 0;
-	double *a[n], *b[n], *c[n], *d[2200];
+	static double a[N][N], b[N][N], c[N][N], d[2200][2200];
     srand(time(0));
 
-	cout << n << ": \n";
+	cout << N << ": \n";
 
 	/*a = new double *[n];
 	b = new double *[n];
 	c = new double *[n];*/
 
-    for (int i = 0; i < n; i++) {
-		a[i] = new double[n];
+    for (int i = 0; i < N; i++) {
+		/*a[i] = new double[n];
 		b[i] = new double[n];
-		c[i] = new double[n];
-		for (int j = 0; j < n; j++) {
+		c[i] = new double[n];*/
+		for (int j = 0; j < N; j++) {
 			a[i][j] = ((double) rand() / (RAND_MAX + 1));
 			b[i][j] = ((double) rand() / (RAND_MAX + 1));
 			c[i][j] = 0;
@@ -67,15 +67,15 @@ int main(int argc, char **argv) {
 	}
 
 	for (int i = 0; i < 2200; i++) {
-		d[i] = new double[2200];
+		//d[i] = new double[2200];
 		for (int j = 0; j < 2200; j++) {
 			d[i][j] = ((double) rand() / (RAND_MAX + 1));
 		}
 	}
 
-    for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			for (int k = 0; k < n; k++) {
+    for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			for (int k = 0; k < N; k++) {
 				c[i][j] += a[i][k] * b[k][j];
 			}
 			sum += c[i][j];
