@@ -6,9 +6,8 @@
 #include <iostream>
 
 using namespace std;
-using namespace std::chrono;
 
-#define N 1000
+#define N 4500
 #define NUM_EVENT 7
 #define THRESHOLD 100000
 #define ERROR_RETURN(retval) { fprintf(stderr, "Error %d %s:line %d: \n", retval,__FILE__,__LINE__);  exit(retval); }
@@ -41,10 +40,6 @@ int main(int argc, char **argv) {
 		ERROR_RETURN(retval);
 	}
 
-	steady_clock::time_point start, finish;
-	start = steady_clock::now();
-
-
 	double sum = 0;
 	static double a[N][N], b[N][N], c[N][N], d[2200][2200];
     srand(time(0));
@@ -60,8 +55,8 @@ int main(int argc, char **argv) {
 		b[i] = new double[n];
 		c[i] = new double[n];*/
 		for (int j = 0; j < N; j++) {
-			a[i][j] = ((double) rand() / (RAND_MAX + 1));
-			b[i][j] = ((double) rand() / (RAND_MAX + 1));
+			a[i][j] = ((double) rand() / (RAND_MAX));
+			b[i][j] = ((double) rand() / (RAND_MAX));
 			c[i][j] = 0;
 		}
 	}
@@ -69,7 +64,7 @@ int main(int argc, char **argv) {
 	for (int i = 0; i < 2200; i++) {
 		//d[i] = new double[2200];
 		for (int j = 0; j < 2200; j++) {
-			d[i][j] = ((double) rand() / (RAND_MAX + 1));
+			d[i][j] = ((double) rand() / (RAND_MAX));
 		}
 	}
 
@@ -86,24 +81,17 @@ int main(int argc, char **argv) {
 		cout << "Using sum variable" << '\n';
 	}
 
-	finish = steady_clock::now();
-	auto duration = finish - start;
-	cout << "Worked in "
-		 << duration_cast<seconds>(duration).count() << " seconds" << '\n';
-
     if ((retval = PAPI_stop(EventSet, values)) != PAPI_OK) {
 		ERROR_RETURN(retval);
 	}
 
-    cout << "INSTRUCTION_RETIRED " << values[0] << '\n'
-         << "UNHALTED_CORE_CYCLES " << values[1] << '\n'
-         << "UNHALTED_REFERENCE_CYCLES " << values[2] << '\n'
-         << "L1D:REPLACEMENT " << values[3] << '\n'
-         << "LLC_MISSES " << values[4] << '\n'
-         << "MEM_UOPS_RETIRED:ALL_LOADS " << values[5] << '\n'
-         << "MEM_UOPS_RETIRED:ALL_STORES " << values[6] << '\n';
-
-
+    cout << values[0] << '\n'
+         << values[1] << '\n'
+         << values[2] << '\n'
+         << values[3] << '\n'
+         << values[4] << '\n'
+         << values[5] << '\n'
+         << values[6] << '\n';
 
 	if ((retval = PAPI_remove_events(EventSet,event_codes, NUM_EVENT)) != PAPI_OK)
 		ERROR_RETURN(retval);

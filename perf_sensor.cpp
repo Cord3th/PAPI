@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define N 2500
+#define N 4500
 
 int main(int argc, char **argv) {
 
@@ -26,8 +26,8 @@ int main(int argc, char **argv) {
 		b[i] = new double[n];
 		c[i] = new double[n];*/
 		for (int j = 0; j < N; j++) {
-			a[i][j] = ((double) rand() / (RAND_MAX + 1));
-			b[i][j] = ((double) rand() / (RAND_MAX + 1));
+			a[i][j] = ((double) rand() / (RAND_MAX));
+			b[i][j] = ((double) rand() / (RAND_MAX));
 			c[i][j] = 0;
 		}
 	}
@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
 	for (int i = 0; i < 2200; i++) {
 		//d[i] = new double[2200];
 		for (int j = 0; j < 2200; j++) {
-			d[i][j] = ((double) rand() / (RAND_MAX + 1));
+			d[i][j] = ((double) rand() / (RAND_MAX));
 		}
 	}
 
